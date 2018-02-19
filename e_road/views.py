@@ -27,6 +27,9 @@ def datastore(request):
                    location = location)
 
         e1.save()
-
-        return HttpResponse(status=204)
-
+     
+        # check if e1 saved
+        if e1.pk is None:
+            return HttpResponse("Upload failed")
+        else:
+            return HttpResponse("Success")
