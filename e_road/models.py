@@ -7,6 +7,7 @@ class Event(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=200)
     location = models.PointField()
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     date = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
