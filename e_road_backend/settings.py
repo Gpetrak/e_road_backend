@@ -25,7 +25,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "images")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
 
 ALLOWED_HOSTS = []
 
