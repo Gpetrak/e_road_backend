@@ -4,6 +4,8 @@ from django.contrib.gis.geos import Point
 from e_road.models import Event
 from django.db.models.loading import get_model
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 import json
 
 @csrf_exempt 
@@ -15,16 +17,27 @@ def datastore(request):
         description = desc_loc['desc']
         latitude = desc_loc['lat']
         longitude = desc_loc['lon']
-       
         
-      #  latitude = float(latitude)
-      #  longitude = float(logitude)
-
         location = Point(longitude, latitude, srid=4326)
-
-        e1 = Event(title = title,
+        
+        if request.FILES.get('image'):
+            # image store
+            myimage = request.FILES.get('image')
+            fs = FileSystemStorage()
+            filename = fs.save(myimage.name, myimage)
+            uploaded_file_url = fs.url(filename)
+        
+            e1 = Event(title = title,
                    description = description,
-                   location = location)
+                   location = location,
+                   image = image)
+
+        else:
+            e1 = Event(title = title,
+            description = description,
+            location = location
+                      )
+
 
         e1.save()
      
@@ -33,3 +46,4 @@ def datastore(request):
             return HttpResponse("Upload failed")
         else:
             return HttpResponse("Success")
+
