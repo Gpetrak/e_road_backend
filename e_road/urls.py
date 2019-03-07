@@ -1,4 +1,3 @@
-
 from django.conf.urls import patterns, url
 from e_road.views import datastore
 
